@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config: Config = {
   content: [
@@ -13,7 +14,9 @@ const config: Config = {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
       },
-      fontFamily: {},
+      fontFamily: {
+        pretendard: ['var(--font-pretendard)', ...defaultTheme.fontFamily.sans],
+      },
     },
   },
   plugins: [tailwindcssAnimate],
