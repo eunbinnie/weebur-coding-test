@@ -1,3 +1,4 @@
+import Providers from '@/app/providers';
 import '@/styles/globals.css';
 
 import type { Metadata } from 'next';
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
