@@ -1,4 +1,8 @@
-import { ProductListResponse, ProductsParams } from '@/types/products.types';
+import {
+  AddProductRequestBody,
+  ProductListResponse,
+  ProductsParams,
+} from '@/types/products.types';
 import ky from 'ky';
 import { serializeParams } from '../utils/api';
 
@@ -10,6 +14,16 @@ export const getProducts = async (params: ProductsParams) => {
   const res = await ky
     .get<ProductListResponse>(`${BASE_URL}/products`, {
       searchParams,
+    })
+    .json();
+  return res;
+};
+
+// 상품 생성
+export const createProduct = async (body: AddProductRequestBody) => {
+  const res = await ky
+    .post(`${BASE_URL}/products/add`, {
+      json: body,
     })
     .json();
   return res;
