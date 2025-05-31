@@ -33,7 +33,11 @@ export default function RootLayout({
   return (
     <html lang='ko' className={cn(pretendard.variable)}>
       <body className='font-pretendard'>
-        <Providers>{children}</Providers>
+        <Providers>
+          <main className='mx-auto mb-10 max-w-screen-2xl px-4 lg:px-6'>
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );
