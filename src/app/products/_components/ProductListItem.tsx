@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils/classnames';
+import { roundToFixedFirst } from '@/lib/utils/number';
 import { Product } from '@/types/products.types';
 import { MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
@@ -33,7 +34,7 @@ const ProductListItem = ({ item, view }: IProductListItem) => {
           <h2 className='line-clamp-1 text-lg font-bold'>{item.title}</h2>
           <p className='line-clamp-2 text-sm'>{item.description}</p>
         </div>
-        <div className={cn('relative', imageContainerClass)}>
+        <div className={cn('relative overflow-hidden', imageContainerClass)}>
           <Image
             src={item.thumbnail}
             alt={`${item.title} 상품 썸네일`}
@@ -50,7 +51,7 @@ const ProductListItem = ({ item, view }: IProductListItem) => {
       <div className='mt-4 flex items-center gap-3'>
         <div className='flex items-center gap-1'>
           <Star size={14} color='#ffbf00' fill='#ffbf00' />
-          <span className='text-xs'>{item.rating}</span>
+          <span className='text-xs'>{roundToFixedFirst(item.rating)}</span>
         </div>
         <div className='flex items-center gap-1'>
           <MessageSquare size={14} color='#94969b' />
