@@ -4,16 +4,26 @@ import { getProducts } from '@/lib/api/products';
 import { useQuery } from '@tanstack/react-query';
 import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from '../_constants/products';
 import ProductListItem from './ProductListItem';
+import { cn } from '@/lib/utils/classnames';
 
 /**
  * 상품 목록을 렌더링하는 컴포넌트입니다.
  *
- * @TODO infinite scroll 구현 필요
- * @TODO list, grid로 view 표시 필요
+ * 상품 리스트 데이터를 불러와 리스트 또는 그리드 형태로 렌더링합니다.
+ *
+ * @TODO infinite scroll 기능 구현현
+ * @TODO list, grid로 view 전환 기능 구현 (24시간 유지)
  */
 const ProductList = () => {
   const { data } = useQuery({
-    queryKey: ['products'],
+    queryKey: [
+      'products',
+      {
+        limit: PRODUCTS_PER_PAGE,
+        skip: 0,
+        select: PRODUCTS_SELECT,
+      },
+    ],
     queryFn: () =>
       getProducts({
         limit: PRODUCTS_PER_PAGE,
@@ -23,11 +33,13 @@ const ProductList = () => {
   });
 
   const listClassName = '[&>*:not(:first-child)]:mt-5'; // 리스트형 클래스네임
+  const gridClassName =
+    'grid grid-cols-1 xs:grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'; // 그리드형 클래스네임
 
   return (
-    <section className='mt-[60px]'>
+    <section className={cn('mt-[60px]', gridClassName)}>
       {data?.products.map((item) => (
-        <ProductListItem key={item.id} item={item} />
+        <ProductListItem key={item.id} item={item} view='grid' />
       ))}
     </section>
   );

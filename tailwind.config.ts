@@ -21,7 +21,7 @@ const config: Config = {
         'custom-shadow': '0px 4px 20px 0px #00000014',
       },
       screens: {
-        '2xl': '1440px',
+        xs: '480px',
       },
     },
   },
