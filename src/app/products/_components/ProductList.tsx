@@ -17,7 +17,6 @@ interface IProductList {
  * 상품 리스트 데이터를 불러와 리스트 또는 그리드 형태로 렌더링합니다.
  *
  * @TODO infinite scroll 기능 구현현
- * @TODO list, grid로 view 전환 기능 구현 (24시간 유지)
  */
 const ProductList = ({ view }: IProductList) => {
   const { data } = useQuery({
