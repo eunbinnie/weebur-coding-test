@@ -11,5 +11,5 @@
   "eslint.validate": ["javascript", "typescript"],
   "eslint.nodePath": "./node_modules/eslint",
   "css.lint.unknownAtRules": "ignore",
-  "tailwindCSS.rootFontSize": 10
+  "tailwindCSS.rootFontSize": 16
 }
