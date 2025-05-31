@@ -17,8 +17,14 @@ const config: Config = {
       fontFamily: {
         pretendard: ['var(--font-pretendard)', ...defaultTheme.fontFamily.sans],
       },
+      boxShadow: {
+        'custom-shadow': '0px 4px 20px 0px #00000014',
+      },
+      screens: {
+        xs: '480px',
+      },
     },
   },
-  plugins: [tailwindcssAnimate],
+  plugins: [tailwindcssAnimate, require('@tailwindcss/line-clamp')],
 };
 export default config;
