@@ -1,3 +1,6 @@
+// 상품 뷰 타입
+export type ProductView = 'list' | 'grid';
+
 // 상품 리스트 조회 파라미터
 export interface ProductsParams {
   limit?: number;

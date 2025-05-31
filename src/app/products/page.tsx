@@ -6,9 +6,13 @@ import {
 } from '@tanstack/react-query';
 import ProductList from './_components/ProductList';
 import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from './_constants/products';
+import { cookies } from 'next/headers';
+import { ProductView } from '@/types/products.types';
 
 const ProductsPage = async () => {
   const queryClient = new QueryClient();
+  const cookieStore = await cookies();
+  const view = cookieStore.get('view')?.value as ProductView;
 
   await queryClient.prefetchQuery({
     queryKey: ['products'],
@@ -22,7 +26,7 @@ const ProductsPage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProductList />
+      <ProductList view={view} />
     </HydrationBoundary>
   );
 };
