@@ -1,6 +1,8 @@
 // 상품 리스트 조회 파라미터
 export interface ProductsParams {
   limit?: number;
+  skip?: number;
+  select?: string;
 }
 
 // 상품 리스트 조회 응답
@@ -16,24 +18,9 @@ export interface Product {
   title: string;
   description: string;
   category: string;
-  price: number;
-  discountPercentage: number;
   rating: number;
-  stock: number;
-  tags: string[];
-  brand: string;
-  sku: string;
-  weight: number;
-  dimensions: Dimensions;
-  warrantyInformation: string;
-  shippingInformation: string;
-  availabilityStatus: string;
   reviews: Review[];
-  returnPolicy: string;
-  minimumOrderQuantity: number;
-  meta: ProductMeta;
   thumbnail: string;
-  images: string[];
 }
 
 export interface Dimensions {
