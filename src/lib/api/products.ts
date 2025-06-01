@@ -1,9 +1,11 @@
-import {
+import ky from 'ky';
+
+import type {
   AddProductRequestBody,
   ProductListResponse,
   ProductsParams,
 } from '@/types/products.types';
-import ky from 'ky';
+
 import { serializeParams } from '../utils/api';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -16,6 +18,7 @@ export const getProducts = async (params: ProductsParams) => {
       searchParams,
     })
     .json();
+
   return res;
 };
 
@@ -26,5 +29,6 @@ export const createProduct = async (body: AddProductRequestBody) => {
       json: body,
     })
     .json();
+
   return res;
 };

@@ -7,6 +7,7 @@ export function serializeParams<T extends Record<string, any>>(
     .reduce(
       (acc, [key, value]) => {
         acc[key] = String(value);
+
         return acc;
       },
       {} as Record<string, string>,

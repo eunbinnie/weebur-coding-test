@@ -1,14 +1,17 @@
-import { getProducts } from '@/lib/api/products';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import ProductList from './_components/ProductList';
-import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from './_constants/products';
 import { cookies } from 'next/headers';
-import { ProductView } from '@/types/products.types';
+
+import { getProducts } from '@/lib/api/products';
+
+import type { ProductView } from '@/types/products.types';
+
+import ProductList from './_components/ProductList';
 import ProductListHeader from './_components/ProductListHeader';
+import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from './_constants/products';
 
 const ProductsPage = async () => {
   const queryClient = new QueryClient();
