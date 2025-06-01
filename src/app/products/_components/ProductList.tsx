@@ -1,11 +1,15 @@
 'use client';
 
-import { getProducts } from '@/lib/api/products';
 import { useQuery } from '@tanstack/react-query';
-import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from '../_constants/products';
-import ProductListItem from './ProductListItem';
-import { ProductView } from '@/types/products.types';
+
+import { getProducts } from '@/lib/api/products';
 import { cn } from '@/lib/utils';
+
+import type { ProductView } from '@/types/products.types';
+
+import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from '../_constants/products';
+
+import ProductListItem from './ProductListItem';
 
 interface IProductList {
   view: ProductView;

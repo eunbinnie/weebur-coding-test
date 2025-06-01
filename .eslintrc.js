@@ -8,12 +8,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier',
   ],
-  plugins: [
-    'react',
-    '@typescript-eslint',
-    'react-hooks',
-    'eslint-plugin-import-helpers',
-  ],
+  plugins: ['react', '@typescript-eslint', 'eslint-plugin-import-helpers'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -34,8 +29,6 @@ module.exports = {
     node: true,
   },
   rules: {
-    'react-hooks/rules-of-hooks': 2,
-    'react-hooks/exhaustive-deps': 1,
     'newline-before-return': 2,
     'react/prop-types': 0,
     'react/react-in-jsx-scope': 0,

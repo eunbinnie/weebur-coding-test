@@ -1,8 +1,10 @@
-import { cn } from '@/lib/utils';
-import { roundToFixedFirst } from '@/lib/utils/number';
-import { Product } from '@/types/products.types';
 import { MessageSquare, Star } from 'lucide-react';
 import Image from 'next/image';
+
+import { cn } from '@/lib/utils';
+import { roundToFixedFirst } from '@/lib/utils/number';
+
+import type { Product } from '@/types/products.types';
 
 interface IProductListItem {
   item: Product;
