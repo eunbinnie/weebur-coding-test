@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import localFont from 'next/font/local';
 
 import type { Metadata } from 'next';
-import { cn } from '@/lib/utils/classnames';
+import { cn } from '@/lib/utils';
 
 const pretendard = localFont({
   src: [
@@ -27,16 +27,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang='ko' className={cn(pretendard.variable)}>
       <body className='font-pretendard'>
         <Providers>
-          <main className='mx-auto mb-10 max-w-screen-xl px-4 lg:px-6'>
+          <main className='mx-auto my-10 max-w-screen-xl px-4 lg:px-6'>
             {children}
           </main>
+          {modal}
         </Providers>
       </body>
     </html>

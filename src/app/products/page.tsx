@@ -8,6 +8,7 @@ import ProductList from './_components/ProductList';
 import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from './_constants/products';
 import { cookies } from 'next/headers';
 import { ProductView } from '@/types/products.types';
+import ProductListHeader from './_components/ProductListHeader';
 
 const ProductsPage = async () => {
   const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const ProductsPage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
+      <ProductListHeader />
       <ProductList view={view} />
     </HydrationBoundary>
   );
