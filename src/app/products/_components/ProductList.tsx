@@ -35,10 +35,7 @@ const ProductList = ({ view }: IProductList) => {
 
   return (
     <section
-      className={cn(
-        'mt-[60px]',
-        view === 'list' ? listClassName : gridClassName,
-      )}
+      className={cn('mt-8', view === 'list' ? listClassName : gridClassName)}
     >
       {data?.products.map((item) => (
         <ProductListItem key={item.id} item={item} view={view} />

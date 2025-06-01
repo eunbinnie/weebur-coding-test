@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang='ko' className={cn(pretendard.variable)}>
       <body className='font-pretendard'>
         <Providers>
-          <main className='mx-auto mb-10 max-w-screen-xl px-4 lg:px-6'>
+          <main className='mx-auto my-10 max-w-screen-xl px-4 lg:px-6'>
             {children}
           </main>
         </Providers>
