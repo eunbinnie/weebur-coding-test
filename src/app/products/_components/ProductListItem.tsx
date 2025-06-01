@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils/classnames';
+import { cn } from '@/lib/utils';
 import { roundToFixedFirst } from '@/lib/utils/number';
 import { Product } from '@/types/products.types';
 import { MessageSquare, Star } from 'lucide-react';
@@ -23,7 +23,7 @@ const ProductListItem = ({ item, view }: IProductListItem) => {
   const imageClass = view === 'list' ? 'object-cover' : 'object-contain';
 
   return (
-    <div className='shadow-custom-shadow group rounded-md px-3 py-4'>
+    <div className='group rounded-md px-3 py-4 shadow-custom-shadow'>
       <div
         className={cn(
           'flex justify-between gap-6',

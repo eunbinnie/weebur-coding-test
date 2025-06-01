@@ -4,8 +4,8 @@ import { getProducts } from '@/lib/api/products';
 import { useQuery } from '@tanstack/react-query';
 import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from '../_constants/products';
 import ProductListItem from './ProductListItem';
-import { cn } from '@/lib/utils/classnames';
 import { ProductView } from '@/types/products.types';
+import { cn } from '@/lib/utils';
 
 interface IProductList {
   view: ProductView;
