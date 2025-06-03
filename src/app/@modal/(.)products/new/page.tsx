@@ -1,5 +1,6 @@
 'use client';
 
+import NewProductForm from '@/app/products/new/_components/NewProductForm';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -26,6 +27,7 @@ const NewProductPage = () => {
             모든 필드를 입력한 후 등록 버튼을 눌러 상품을 추가하세요.
           </DialogDescription>
         </DialogHeader>
+        <NewProductForm />
       </DialogContent>
     </Dialog>
   );
