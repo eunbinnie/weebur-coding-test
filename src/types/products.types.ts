@@ -50,7 +50,7 @@ export interface ProductMeta {
 // 상품 생성 파라미터
 export interface AddProductRequestBody {
   title: string;
-  description: string;
+  description?: string;
   price: number;
   discountPercentage?: number;
   brand: 'Apple' | 'Samsung' | 'Weebur';
