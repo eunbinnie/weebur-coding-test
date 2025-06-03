@@ -6,8 +6,15 @@ import { useForm } from 'react-hook-form';
 import type { AddProductInput } from '@/schemas/product.schema';
 import { addProductSchema } from '@/schemas/product.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { LoaderCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
+import { createProduct } from '@/lib/api/products';
 import { formatNumberWithCommas } from '@/lib/utils/number';
+
+import type { AddProductRequestBody, Brand } from '@/types/products.types';
 
 import Button from '@/components/Button';
 
@@ -16,7 +23,12 @@ import DescriptionTextarea from './DescriptionTextarea';
 import NumberInput from './NumberInput';
 import TitleInput from './TitleInput';
 
-const NewProductForm = () => {
+interface NewProductFormProps {
+  onSuccess?: () => void;
+}
+
+const NewProductForm = ({ onSuccess }: NewProductFormProps) => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -28,6 +40,20 @@ const NewProductForm = () => {
     resolver: zodResolver(addProductSchema),
   });
 
+  const mutation = useMutation({
+    mutationFn: createProduct,
+    onSuccess: () => {
+      toast.success('상품이 등록되었습니다.');
+      if (onSuccess) {
+        onSuccess();
+      }
+      router.push('/products');
+    },
+    onError: () => {
+      toast.error('상품 등록에 실패했습니다.');
+    },
+  });
+
   const price = watch('price') || 0; // 상품 가격
   const discountPercentage = watch('discountPercentage') || 0; // 할인율
 
@@ -36,7 +62,10 @@ const NewProductForm = () => {
   ); // 할인 적용된 최종 가격
 
   const onSubmit: SubmitHandler<AddProductInput> = (data) => {
-    const formData = { ...data };
+    const formData: AddProductRequestBody = {
+      ...data,
+      brand: data.brand as Brand,
+    };
     // description 필드가 비어있으면 제거
     if (!formData.description || formData.description.trim() === '') {
       delete formData.description;
@@ -45,6 +74,8 @@ const NewProductForm = () => {
     if (!formData.discountPercentage || formData.discountPercentage === 0) {
       delete formData.discountPercentage;
     }
+
+    mutation.mutate(formData);
   };
 
   return (
@@ -77,8 +108,16 @@ const NewProductForm = () => {
           </span>
           원
         </p>
-        <Button type='submit' disabled={!isValid} className='ml-auto'>
-          등록하기
+        <Button
+          type='submit'
+          disabled={!isValid || mutation.isPending}
+          className='ml-auto min-w-20'
+        >
+          {mutation.isPending ? (
+            <LoaderCircle className='mx-auto animate-spin py-1' />
+          ) : (
+            '등록하기'
+          )}
         </Button>
       </div>
     </form>
