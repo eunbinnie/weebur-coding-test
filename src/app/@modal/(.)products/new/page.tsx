@@ -27,7 +27,7 @@ const NewProductPage = () => {
             모든 필드를 입력한 후 등록 버튼을 눌러 상품을 추가하세요.
           </DialogDescription>
         </DialogHeader>
-        <NewProductForm />
+        <NewProductForm onSuccess={handleClose} />
       </DialogContent>
     </Dialog>
   );

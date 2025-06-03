@@ -2,6 +2,7 @@ import Providers from '@/app/providers';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Toaster } from 'sonner';
 
 import { cn } from '@/lib/utils';
 
@@ -40,6 +41,7 @@ export default function RootLayout({
             {children}
           </main>
           {modal}
+          <Toaster theme='system' position='top-right' richColors />
         </Providers>
       </body>
     </html>
