@@ -1,3 +1,4 @@
+import { BRANDS } from '@/app/products/_constants/products';
 import { z } from 'zod';
 
 export const addProductSchema = z.object({
@@ -14,7 +15,14 @@ export const addProductSchema = z.object({
     .number()
     .max(100, { message: '할인율은 100% 이하여야 합니다.' })
     .optional(),
-  // brand: z.string().min(1, { message: '브랜드를 입력해주세요.' }),
+  brand: z.string().refine(
+    (val) => {
+      return BRANDS.some((brand) => brand.value === val);
+    },
+    {
+      message: '브랜드를 선택해 주세요.',
+    },
+  ),
 });
 
 export type AddProductInput = z.infer<typeof addProductSchema>;
