@@ -1,3 +1,5 @@
+'use client';
+
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -24,6 +26,7 @@ import {
 import { BRANDS } from '../../_constants/products';
 
 import DescriptionTextarea from './DescriptionTextarea';
+import PriceInput from './PriceInput';
 import TitleInput from './TitleInput';
 
 const NewProductForm = () => {
@@ -48,21 +51,15 @@ const NewProductForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
       <TitleInput errors={errors} register={register} />
       <DescriptionTextarea errors={errors} register={register} />
-      {/* 상품 가격 */}
-      {/* <InputWrapper
-        label='상품 가격'
-        htmlFor='price'
+      <PriceInput
         required
-        error={!!errors.price}
-        errorMessage={errors.price?.message}
+        errors={errors}
+        register={register}
+        title='price'
+        label='상품 가격'
+        placeholder='가격을 입력해 주세요'
         unit='원'
-      >
-        <Input
-          id='price'
-          placeholder='가격을 입력하세요'
-          {...register('price')}
-        />
-      </InputWrapper> */}
+      />
 
       {/* 할인율 */}
       {/* <InputWrapper
