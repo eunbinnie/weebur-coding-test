@@ -1,3 +1,7 @@
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
+
+import type { AddProductInput } from '@/schemas/product.schema';
+
 // 상품 뷰 타입
 export type ProductView = 'list' | 'grid';
 
@@ -56,4 +60,10 @@ export interface AddProductRequestBody {
   price: number;
   discountPercentage?: number;
   brand: Brand;
+}
+
+// 상품 입력 컴포넌트 타입
+export interface ProductInputProps {
+  errors: FieldErrors<AddProductInput>;
+  register: UseFormRegister<AddProductInput>;
 }

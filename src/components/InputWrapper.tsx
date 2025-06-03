@@ -46,7 +46,7 @@ const InputWrapper = ({
         {unit && <span className='text-sm text-gray-600'>{unit}</span>}
       </div>
       {error && errorMessage && (
-        <span className='block text-xs leading-none text-red-500'>
+        <span className='mt-1 block text-xs leading-none text-red-500'>
           {errorMessage}
         </span>
       )}

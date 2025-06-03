@@ -20,7 +20,7 @@ const NewProductPage = () => {
 
   return (
     <Dialog open onOpenChange={handleClose}>
-      <DialogContent className='w-[calc(100%-24px)] rounded-lg sm:max-w-[500px]'>
+      <DialogContent className='w-[calc(100%-24px)] rounded-lg sm:max-w-[400px]'>
         <DialogHeader>
           <DialogTitle>새 상품 등록</DialogTitle>
           <DialogDescription className='text-xs sm:text-sm'>

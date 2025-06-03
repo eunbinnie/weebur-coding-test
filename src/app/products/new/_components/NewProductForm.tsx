@@ -1,6 +1,10 @@
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
+import type { AddProductInput } from '@/schemas/product.schema';
+import { addProductSchema } from '@/schemas/product.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import type { AddProductRequestBody } from '@/types/products.types';
 
 import Button from '@/components/Button';
@@ -19,47 +23,33 @@ import {
 
 import { BRANDS } from '../../_constants/products';
 
+import DescriptionTextarea from './DescriptionTextarea';
+import TitleInput from './TitleInput';
+
 const NewProductForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<AddProductRequestBody>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<AddProductRequestBody> = (data) => {
-    console.log(data);
+    formState: { errors, isValid },
+  } = useForm<AddProductInput>({
+    mode: 'onChange',
+    resolver: zodResolver(addProductSchema),
+  });
+  const onSubmit: SubmitHandler<AddProductInput> = (data) => {
+    // 빈 optional 필드 제거
+    const formData = { ...data };
+    if (!formData.description || formData.description.trim() === '') {
+      delete formData.description;
+    }
+    console.log(formData);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
-      {/* 상품명 */}
-      <InputWrapper
-        label='상품명'
-        htmlFor='title'
-        required
-        error={!!errors.title}
-        errorMessage={errors.title?.message}
-      >
-        <Input
-          id='title'
-          placeholder='상품명을 입력하세요'
-          {...register('title')}
-        />
-      </InputWrapper>
-      {/* 상품 설명 */}
-      <InputWrapper
-        label='상품 설명'
-        htmlFor='description'
-        error={!!errors.description}
-        errorMessage={errors.description?.message}
-      >
-        <Textarea
-          id='description'
-          placeholder='상품에 대한 설명을 입력하세요'
-          {...register('description')}
-        />
-      </InputWrapper>
+      <TitleInput errors={errors} register={register} />
+      <DescriptionTextarea errors={errors} register={register} />
       {/* 상품 가격 */}
-      <InputWrapper
+      {/* <InputWrapper
         label='상품 가격'
         htmlFor='price'
         required
@@ -72,9 +62,10 @@ const NewProductForm = () => {
           placeholder='가격을 입력하세요'
           {...register('price')}
         />
-      </InputWrapper>
+      </InputWrapper> */}
+
       {/* 할인율 */}
-      <InputWrapper
+      {/* <InputWrapper
         label='할인율'
         htmlFor='discountPercentage'
         error={!!errors.discountPercentage}
@@ -86,16 +77,17 @@ const NewProductForm = () => {
           placeholder='할인율을 입력하세요'
           {...register('discountPercentage')}
         />
-      </InputWrapper>
+      </InputWrapper> */}
+
       {/* 브랜드 */}
-      <InputWrapper
+      {/* <InputWrapper
         label='브랜드'
         htmlFor='brand'
         error={!!errors.brand}
         errorMessage={errors.brand?.message}
         required
       >
-        <Select {...register('brand')}>
+        <Select>
           <SelectTrigger className='border-gray-500 py-1 leading-[1.6] text-black outline-none placeholder:text-gray-500 focus-visible:ring-1 focus-visible:ring-gray-300'>
             <SelectValue placeholder='브랜드를 선택하세요' />
           </SelectTrigger>
@@ -112,9 +104,9 @@ const NewProductForm = () => {
             </SelectGroup>
           </SelectContent>
         </Select>
-      </InputWrapper>
+      </InputWrapper> */}
       <div className='flex pt-5'>
-        <Button type='submit' className='ml-auto'>
+        <Button type='submit' disabled={!isValid} className='ml-auto'>
           등록하기
         </Button>
       </div>
