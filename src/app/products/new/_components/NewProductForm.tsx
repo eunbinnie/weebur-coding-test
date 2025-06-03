@@ -6,6 +6,7 @@ import type { AddProductRequestBody } from '@/types/products.types';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
 import InputWrapper from '@/components/InputWrapper';
+import Textarea from '@/components/Textarea';
 
 const NewProductForm = () => {
   const {
@@ -18,7 +19,7 @@ const NewProductForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
       {/* 상품명 */}
       <InputWrapper
         label='상품명'
@@ -33,9 +34,21 @@ const NewProductForm = () => {
           {...register('title')}
         />
       </InputWrapper>
-      <Button type='submit' className='mt-5'>
-        등록하기
-      </Button>
+      {/* 상품 설명 */}
+      <InputWrapper
+        label='상품 설명'
+        htmlFor='description'
+        required
+        error={!!errors.description}
+        errorMessage={errors.description?.message}
+      >
+        <Textarea
+          id='description'
+          placeholder='상품 설명을 입력하세요'
+          {...register('description')}
+        />
+      </InputWrapper>
+      <Button type='submit'>등록하기</Button>
     </form>
   );
 };
