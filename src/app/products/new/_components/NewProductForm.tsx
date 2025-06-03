@@ -6,8 +6,12 @@ import { useForm } from 'react-hook-form';
 import type { AddProductInput } from '@/schemas/product.schema';
 import { addProductSchema } from '@/schemas/product.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
 
+import { createProduct } from '@/lib/api/products';
 import { formatNumberWithCommas } from '@/lib/utils/number';
+
+import type { AddProductRequestBody, Brand } from '@/types/products.types';
 
 import Button from '@/components/Button';
 
@@ -28,6 +32,10 @@ const NewProductForm = () => {
     resolver: zodResolver(addProductSchema),
   });
 
+  const mutation = useMutation({
+    mutationFn: createProduct,
+  });
+
   const price = watch('price') || 0; // 상품 가격
   const discountPercentage = watch('discountPercentage') || 0; // 할인율
 
@@ -36,7 +44,10 @@ const NewProductForm = () => {
   ); // 할인 적용된 최종 가격
 
   const onSubmit: SubmitHandler<AddProductInput> = (data) => {
-    const formData = { ...data };
+    const formData: AddProductRequestBody = {
+      ...data,
+      brand: data.brand as Brand,
+    };
     // description 필드가 비어있으면 제거
     if (!formData.description || formData.description.trim() === '') {
       delete formData.description;
@@ -45,6 +56,8 @@ const NewProductForm = () => {
     if (!formData.discountPercentage || formData.discountPercentage === 0) {
       delete formData.discountPercentage;
     }
+
+    mutation.mutate(formData);
   };
 
   return (
