@@ -47,11 +47,13 @@ export interface ProductMeta {
   qrCode: string;
 }
 
+export type Brand = 'Apple' | 'Samsung' | 'Weebur';
+
 // 상품 생성 파라미터
 export interface AddProductRequestBody {
   title: string;
   description?: string;
   price: number;
   discountPercentage?: number;
-  brand: 'Apple' | 'Samsung' | 'Weebur';
+  brand: Brand;
 }

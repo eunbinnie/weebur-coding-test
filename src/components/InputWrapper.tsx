@@ -5,6 +5,7 @@ interface InputWrapperProps {
   children: React.ReactNode;
   error?: boolean;
   errorMessage?: string;
+  unit?: string;
 }
 
 /**
@@ -18,6 +19,7 @@ interface InputWrapperProps {
  * @param htmlFor label의 htmlFor 속성 값으로, 연결될 input의 id
  * @param error 에러 상태 여부. true일 경우 에러 메시지를 출력
  * @param errorMessage 에러 메시지 텍스트
+ * @param unit 단위 텍스트
  */
 const InputWrapper = ({
   label,
@@ -26,6 +28,7 @@ const InputWrapper = ({
   children,
   error,
   errorMessage,
+  unit,
 }: InputWrapperProps) => {
   return (
     <div>
@@ -38,7 +41,10 @@ const InputWrapper = ({
           {required && <span className='text-red-500'>*</span>}
         </label>
       )}
-      {children}
+      <div className='flex items-center gap-1'>
+        {children}
+        {unit && <span className='text-sm text-gray-600'>{unit}</span>}
+      </div>
       {error && errorMessage && (
         <span className='block text-xs leading-none text-red-500'>
           {errorMessage}
