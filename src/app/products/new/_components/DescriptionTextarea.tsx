@@ -13,7 +13,7 @@ const DescriptionTextarea = ({ errors, register }: ProductInputProps) => {
     >
       <Textarea
         id='description'
-        placeholder='상품에 대한 설명을 입력하세요'
+        placeholder='상품에 대한 설명을 입력해 주세요'
         {...register('description')}
       />
     </InputWrapper>

@@ -19,7 +19,13 @@ interface PriceInputProps extends ProductInputProps {
   required?: boolean;
 }
 
-const PriceInput = ({
+/**
+ * NumberInput
+ *
+ * 가격(숫자) 입력 전용 컴포넌트입니다.
+ * 입력 시 자동으로 천 단위 콤마가 추가되어 표시되며, 폼에 저장할 때는 콤마 제거 후 숫자 값으로 변환합니다.
+ */
+const NumberInput = ({
   errors,
   register,
   title,
@@ -28,6 +34,7 @@ const PriceInput = ({
   unit,
   required,
 }: PriceInputProps) => {
+  // 콤마를 포함하여 표시되는 입력값
   const [displayValue, setDisplayValue] = useState('');
 
   const {
@@ -41,6 +48,7 @@ const PriceInput = ({
     },
   });
 
+  // 입력값 변경 시 콤마 추가해서 표시
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatNumberWithCommas(e.target.value);
     setDisplayValue(formatted);
@@ -68,4 +76,4 @@ const PriceInput = ({
   );
 };
 
-export default PriceInput;
+export default NumberInput;

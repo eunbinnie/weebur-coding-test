@@ -14,7 +14,7 @@ const TitleInput = ({ errors, register }: ProductInputProps) => {
     >
       <Input
         id='title'
-        placeholder='상품명을 입력하세요'
+        placeholder='상품명을 입력해 주세요'
         {...register('title')}
       />
     </InputWrapper>

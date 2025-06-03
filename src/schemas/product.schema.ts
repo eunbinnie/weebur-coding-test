@@ -10,7 +10,10 @@ export const addProductSchema = z.object({
     .number()
     .min(1, { message: '가격을 입력해주세요.' })
     .min(1000, { message: '최소 1000원 이상 입력해주세요.' }),
-  // discountPercentage: z.number().min(0, { message: '할인율을 입력해주세요.' }),
+  discountPercentage: z
+    .number()
+    .max(100, { message: '할인율은 100% 이하여야 합니다.' })
+    .optional(),
   // brand: z.string().min(1, { message: '브랜드를 입력해주세요.' }),
 });
 

@@ -26,7 +26,7 @@ import {
 import { BRANDS } from '../../_constants/products';
 
 import DescriptionTextarea from './DescriptionTextarea';
-import PriceInput from './PriceInput';
+import NumberInput from './NumberInput';
 import TitleInput from './TitleInput';
 
 const NewProductForm = () => {
@@ -39,10 +39,14 @@ const NewProductForm = () => {
     resolver: zodResolver(addProductSchema),
   });
   const onSubmit: SubmitHandler<AddProductInput> = (data) => {
-    // 빈 optional 필드 제거
     const formData = { ...data };
+    // description 필드가 비어있으면 제거
     if (!formData.description || formData.description.trim() === '') {
       delete formData.description;
+    }
+    // discountPercentage 필드가 0이면 제거
+    if (!formData.discountPercentage || formData.discountPercentage === 0) {
+      delete formData.discountPercentage;
     }
     console.log(formData);
   };
@@ -51,7 +55,7 @@ const NewProductForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
       <TitleInput errors={errors} register={register} />
       <DescriptionTextarea errors={errors} register={register} />
-      <PriceInput
+      <NumberInput
         required
         errors={errors}
         register={register}
@@ -60,21 +64,14 @@ const NewProductForm = () => {
         placeholder='가격을 입력해 주세요'
         unit='원'
       />
-
-      {/* 할인율 */}
-      {/* <InputWrapper
+      <NumberInput
+        errors={errors}
+        register={register}
+        title='discountPercentage'
         label='할인율'
-        htmlFor='discountPercentage'
-        error={!!errors.discountPercentage}
-        errorMessage={errors.discountPercentage?.message}
+        placeholder='할인율을 입력해 주세요'
         unit='%'
-      >
-        <Input
-          id='discountPercentage'
-          placeholder='할인율을 입력하세요'
-          {...register('discountPercentage')}
-        />
-      </InputWrapper> */}
+      />
 
       {/* 브랜드 */}
       {/* <InputWrapper
