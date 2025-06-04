@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 
@@ -7,7 +8,6 @@ import type { AddProductInput } from '@/schemas/product.schema';
 import { addProductSchema } from '@/schemas/product.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { LoaderCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -56,10 +56,14 @@ const NewProductForm = ({ onSuccess }: NewProductFormProps) => {
 
   const price = watch('price') || 0; // 상품 가격
   const discountPercentage = watch('discountPercentage') || 0; // 할인율
+  // 할인 적용된 최종 가격
+  const finalPrice: number | '-' = useMemo(() => {
+    if (discountPercentage > 100) {
+      return '-';
+    }
 
-  const finalPrice = Math.floor(
-    price - (price * (discountPercentage || 0)) / 100,
-  ); // 할인 적용된 최종 가격
+    return Math.floor(price - (price * (discountPercentage || 0)) / 100);
+  }, [price, discountPercentage]);
 
   const onSubmit: SubmitHandler<AddProductInput> = (data) => {
     const formData: AddProductRequestBody = {
@@ -103,21 +107,24 @@ const NewProductForm = ({ onSuccess }: NewProductFormProps) => {
       <div className='flex items-center justify-between pt-5'>
         <p className='text-sm'>
           최종 가격:{' '}
-          <span className='font-bold'>
-            {formatNumberWithCommas(finalPrice.toString())}
-          </span>
-          원
+          {finalPrice === '-' ? (
+            <span>-</span>
+          ) : (
+            <>
+              <span className='font-bold'>
+                {formatNumberWithCommas(finalPrice.toString())}
+              </span>
+              원
+            </>
+          )}
         </p>
         <Button
           type='submit'
           disabled={!isValid || mutation.isPending}
           className='ml-auto min-w-20'
+          loading={mutation.isPending}
         >
-          {mutation.isPending ? (
-            <LoaderCircle className='mx-auto animate-spin py-1' />
-          ) : (
-            '등록하기'
-          )}
+          등록하기
         </Button>
       </div>
     </form>

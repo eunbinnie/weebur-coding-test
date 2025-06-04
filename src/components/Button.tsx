@@ -1,9 +1,12 @@
 import { forwardRef } from 'react';
 
+import { LoaderCircle } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 
 interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
+  loading?: boolean;
 }
 
 /**
@@ -12,7 +15,10 @@ interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
  * @param customClassName tailwind className을 확장할 수 있습니다.
  */
 const Button = forwardRef<HTMLButtonElement, IButtonProps>(
-  ({ type = 'button', disabled, children, className, ...rest }, ref) => {
+  (
+    { type = 'button', disabled, children, className, loading, ...rest },
+    ref,
+  ) => {
     return (
       <button
         ref={ref}
@@ -25,7 +31,11 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>(
         )}
         {...rest}
       >
-        {children}
+        {loading ? (
+          <LoaderCircle className='mx-auto animate-spin py-1' />
+        ) : (
+          children
+        )}
       </button>
     );
   },

@@ -18,12 +18,13 @@ const ProductsPage = async () => {
   const cookieStore = await cookies();
   const view = cookieStore.get('view')?.value as ProductView;
 
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ['products'],
-    queryFn: () =>
+    initialPageParam: 0,
+    queryFn: ({ pageParam = 0 }) =>
       getProducts({
         limit: PRODUCTS_PER_PAGE,
-        skip: 0,
+        skip: pageParam,
         select: PRODUCTS_SELECT,
       }),
   });
