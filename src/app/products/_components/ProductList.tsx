@@ -40,7 +40,15 @@ const ProductList = ({ view }: IProductList) => {
         select: PRODUCTS_SELECT,
       }),
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.skip + PRODUCTS_PER_PAGE,
+    getNextPageParam: (lastPage) => {
+      if (
+        lastPage.total === lastPage.products[lastPage.products.length - 1].id
+      ) {
+        return undefined;
+      }
+
+      return lastPage.skip + PRODUCTS_PER_PAGE;
+    },
   });
 
   const listClassName = '[&>*:not(:first-child)]:mt-5'; // 리스트형 클래스네임
