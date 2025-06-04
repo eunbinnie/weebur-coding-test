@@ -23,33 +23,26 @@ interface IProductList {
  * 상품 리스트 데이터를 불러와 리스트 또는 그리드 형태로 렌더링합니다.
  */
 const ProductList = ({ view }: IProductList) => {
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery({
-    queryKey: ['products'],
-    queryFn: ({ pageParam = 0 }) =>
-      getProducts({
-        limit: PRODUCTS_PER_PAGE,
-        skip: pageParam,
-        select: PRODUCTS_SELECT,
-      }),
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => {
-      if (
-        lastPage.total === lastPage.products[lastPage.products.length - 1].id
-      ) {
-        return undefined;
-      }
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ['products'],
+      queryFn: ({ pageParam = 0 }) =>
+        getProducts({
+          limit: PRODUCTS_PER_PAGE,
+          skip: pageParam,
+          select: PRODUCTS_SELECT,
+        }),
+      initialPageParam: 0,
+      getNextPageParam: (lastPage) => {
+        if (
+          lastPage.total === lastPage.products[lastPage.products.length - 1].id
+        ) {
+          return undefined;
+        }
 
-      return lastPage.skip + PRODUCTS_PER_PAGE;
-    },
-  });
+        return lastPage.skip + PRODUCTS_PER_PAGE;
+      },
+    });
 
   const listClassName = '[&>*:not(:first-child)]:mt-5'; // 리스트형 클래스네임
   const gridClassName =
