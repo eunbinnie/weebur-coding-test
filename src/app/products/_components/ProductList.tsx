@@ -1,13 +1,13 @@
 'use client';
 
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { LoaderCircle } from 'lucide-react';
 
 import { getProducts } from '@/lib/api/products';
 import { cn } from '@/lib/utils';
 
 import type { ProductView } from '@/types/products.types';
-
-import Button from '@/components/Button';
 
 import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from '../_constants/products';
 
@@ -23,26 +23,27 @@ interface IProductList {
  * 상품 리스트 데이터를 불러와 리스트 또는 그리드 형태로 렌더링합니다.
  */
 const ProductList = ({ view }: IProductList) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ['products'],
-      queryFn: ({ pageParam = 0 }) =>
-        getProducts({
-          limit: PRODUCTS_PER_PAGE,
-          skip: pageParam,
-          select: PRODUCTS_SELECT,
-        }),
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) => {
-        if (
-          lastPage.total === lastPage.products[lastPage.products.length - 1].id
-        ) {
-          return undefined;
-        }
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['products'],
+    queryFn: ({ pageParam = 0 }) =>
+      getProducts({
+        limit: PRODUCTS_PER_PAGE,
+        skip: pageParam,
+        select: PRODUCTS_SELECT,
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => {
+      if (
+        lastPage.total === lastPage.products[lastPage.products.length - 1].id
+      ) {
+        return undefined;
+      }
 
-        return lastPage.skip + PRODUCTS_PER_PAGE;
-      },
-    });
+      return lastPage.skip + PRODUCTS_PER_PAGE;
+    },
+  });
+
+  const observer = useInfiniteScroll({ fetchNextPage, hasNextPage });
 
   const listClassName = '[&>*:not(:first-child)]:mt-5'; // 리스트형 클래스네임
   const gridClassName =
@@ -59,13 +60,11 @@ const ProductList = ({ view }: IProductList) => {
           )),
         )}
       </section>
-      <Button
-        className='mt-8'
-        disabled={!hasNextPage || isFetchingNextPage}
-        onClick={() => fetchNextPage()}
-      >
-        더 보기
-      </Button>
+      {hasNextPage && (
+        <div ref={observer} className='my-20'>
+          <LoaderCircle className='mx-auto animate-spin' />
+        </div>
+      )}
     </>
   );
 };
