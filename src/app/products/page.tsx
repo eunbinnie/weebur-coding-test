@@ -9,6 +9,8 @@ import { getProducts } from '@/lib/api/products';
 
 import type { ProductView } from '@/types/products.types';
 
+import ScrollToTopButton from '@/components/ScrollToTopButton';
+
 import ProductList from './_components/ProductList';
 import ProductListHeader from './_components/ProductListHeader';
 import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from './_constants/products';
@@ -30,10 +32,13 @@ const ProductsPage = async () => {
   });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProductListHeader />
-      <ProductList view={view} />
-    </HydrationBoundary>
+    <>
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ProductListHeader />
+        <ProductList view={view} />
+      </HydrationBoundary>
+      <ScrollToTopButton />
+    </>
   );
 };
 

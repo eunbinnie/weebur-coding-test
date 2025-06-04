@@ -1,5 +1,6 @@
 'use client';
 
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getProducts } from '@/lib/api/products';
@@ -7,11 +8,15 @@ import { cn } from '@/lib/utils';
 
 import type { ProductView } from '@/types/products.types';
 
-import Button from '@/components/Button';
-
-import { PRODUCTS_PER_PAGE, PRODUCTS_SELECT } from '../_constants/products';
+import {
+  gridClassName,
+  listClassName,
+  PRODUCTS_PER_PAGE,
+  PRODUCTS_SELECT,
+} from '../_constants/products';
 
 import ProductListItem from './ProductListItem';
+import ProductSkeletonItem from './ProductSkeletonItem';
 
 interface IProductList {
   view: ProductView;
@@ -44,9 +49,7 @@ const ProductList = ({ view }: IProductList) => {
       },
     });
 
-  const listClassName = '[&>*:not(:first-child)]:mt-5'; // 리스트형 클래스네임
-  const gridClassName =
-    'grid grid-cols-1 xs:grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'; // 그리드형 클래스네임
+  const observer = useInfiniteScroll({ fetchNextPage, hasNextPage });
 
   return (
     <>
@@ -59,13 +62,20 @@ const ProductList = ({ view }: IProductList) => {
           )),
         )}
       </section>
-      <Button
-        className='mt-8'
-        disabled={!hasNextPage || isFetchingNextPage}
-        onClick={() => fetchNextPage()}
-      >
-        더 보기
-      </Button>
+      {hasNextPage && (
+        <div
+          ref={observer}
+          className={cn(
+            'mt-8 min-h-[200px]',
+            view === 'list' ? listClassName : gridClassName,
+          )}
+        >
+          {isFetchingNextPage &&
+            Array.from({ length: PRODUCTS_PER_PAGE }).map((_, i) => (
+              <ProductSkeletonItem key={i} view={view} />
+            ))}
+        </div>
+      )}
     </>
   );
 };

@@ -19,3 +19,7 @@ export const BRANDS: { value: Brand; label: Brand }[] = [
     label: 'Weebur',
   },
 ];
+
+export const listClassName = '[&>*:not(:first-child)]:mt-5'; // 리스트형 클래스네임
+export const gridClassName =
+  'grid grid-cols-1 xs:grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4'; // 그리드형 클래스네임
