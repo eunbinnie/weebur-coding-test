@@ -42,6 +42,7 @@ yarn start
 
 ### 2. 상품 생성 페이지
 
+- 상품 생성 페이지는 Parallel Routes를 사용하여 모달로 오버레이되도록 구현
 - React Hook Form과 Zod를 이용해 유효성 검증
 - 가격/할인율 입력 UX: 숫자 단위(콤마 포함)로 렌더링, 제출 시 number 타입으로 변환 처리
 
