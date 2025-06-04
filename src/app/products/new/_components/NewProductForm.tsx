@@ -7,7 +7,6 @@ import type { AddProductInput } from '@/schemas/product.schema';
 import { addProductSchema } from '@/schemas/product.schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { LoaderCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
@@ -112,12 +111,9 @@ const NewProductForm = ({ onSuccess }: NewProductFormProps) => {
           type='submit'
           disabled={!isValid || mutation.isPending}
           className='ml-auto min-w-20'
+          loading={mutation.isPending}
         >
-          {mutation.isPending ? (
-            <LoaderCircle className='mx-auto animate-spin py-1' />
-          ) : (
-            '등록하기'
-          )}
+          등록하기
         </Button>
       </div>
     </form>
