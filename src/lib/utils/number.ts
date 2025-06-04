@@ -1,7 +1,7 @@
 // 소수점 첫째자리로 반올림
-export function roundToFixedFirst(num: number): number {
+export const roundToFixedFirst = (num: number): number => {
   return Math.round(num * 10) / 10;
-}
+};
 
 // 숫자에 콤마 추가하는 함수
 export const formatNumberWithCommas = (value: string): string => {
